@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
+import AssignmentDetailsPage from '../pages/AssignmentDetailsPage';
 import AssignmentsPage from '../pages/AssignmentsPage';
 import CreateAssignmentPage from '../pages/CreateAssignmentPage';
 import HomePage from '../pages/HomePage';
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
 			{
 				path: '/assignments',
 				element: <AssignmentsPage />,
+			},
+			{
+				path: '/assignment/:id',
+				element: <AssignmentDetailsPage />,
 			},
 			{
 				path: '/assignments/create',
