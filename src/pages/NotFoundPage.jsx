@@ -1,23 +1,6 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const NotFoundPage = () => {
-	const [countdown, setCountdown] = useState(10);
-
-	useEffect(() => {
-		const timer = setInterval(() => {
-			setCountdown((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-		}, 1000);
-
-		return () => clearInterval(timer);
-	}, []);
-
-	useEffect(() => {
-		if (countdown === 0) {
-			window.location.href = '/';
-		}
-	}, [countdown]);
-
 	return (
 		<div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
 			<div className="max-w-md w-full space-y-8 text-center">
@@ -29,11 +12,6 @@ const NotFoundPage = () => {
 					</p>
 				</div>
 				<div className="space-y-4">
-					<p className="text-lg text-gray-600">
-						You will be redirected to the home page in{' '}
-						<span className="font-bold text-blue-600">{countdown}</span>{' '}
-						seconds.
-					</p>
 					<div className="flex justify-center space-x-4">
 						<Link
 							to="/"
@@ -48,32 +26,6 @@ const NotFoundPage = () => {
 							Go Back
 						</button>
 					</div>
-				</div>
-				<div className="mt-8">
-					<p className="text-lg text-gray-600">Here are some helpful links:</p>
-					<ul className="mt-4 space-y-2">
-						<li>
-							<Link to="/" className="text-indigo-600 hover:text-indigo-500">
-								Home
-							</Link>
-						</li>
-						<li>
-							<Link
-								to="/about"
-								className="text-indigo-600 hover:text-indigo-500"
-							>
-								About Us
-							</Link>
-						</li>
-						<li>
-							<Link
-								to="/contact"
-								className="text-indigo-600 hover:text-indigo-500"
-							>
-								Contact
-							</Link>
-						</li>
-					</ul>
 				</div>
 			</div>
 		</div>

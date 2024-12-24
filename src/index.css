@@ -5,3 +5,13 @@
 html {
 	overflow-y: scroll;
 }
+input[type='number'] {
+	appearance: textfield;
+	-moz-appearance: textfield; /* For Firefox */
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+	-webkit-appearance: none; /* For Chrome, Safari, Edge */
+	margin: 0;
+}

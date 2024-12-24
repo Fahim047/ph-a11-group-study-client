@@ -24,13 +24,14 @@ const Navbar = () => {
 		toast.success('Logged out successfully.');
 	};
 
-	const NavItem = ({ to, children, onClick }) => (
+	const NavItem = ({ to, children, onClick, exact }) => (
 		<NavLink
 			to={to}
+			end={exact}
 			className={({ isActive }) =>
 				`px-3 py-2 rounded-md text-sm text-nowrap font-medium transition duration-150 ease-in-out ${
 					isActive
-						? 'text-indigo-600 bg-indigo-50'
+						? 'text-blue-600 bg-indigo-50'
 						: 'text-gray-600 hover:text-indigo-600 hover:bg-gray-50'
 				}`
 			}
@@ -40,9 +41,10 @@ const Navbar = () => {
 		</NavLink>
 	);
 
-	const MobileNavItem = ({ to, icon: Icon, children, onClick }) => (
+	const MobileNavItem = ({ to, icon: Icon, children, onClick, exact }) => (
 		<NavLink
 			to={to}
+			end={exact}
 			className={({ isActive }) =>
 				`flex items-center px-3 py-2 rounded-md text-base font-medium transition duration-150 ease-in-out ${
 					isActive
@@ -59,24 +61,30 @@ const Navbar = () => {
 
 	return (
 		<nav className="bg-gradient-to-r from-blue-500 via-blue-300 to-blue-500 text-white sticky top-0 z-50 shadow-lg">
-			<div className="max-w-7xl mx-auto px-4 py-4">
+			<div className="container mx-auto px-4 py-4">
 				<div className="flex justify-between">
 					<div className="flex items-center">
 						<Link to="/" className="flex-shrink-0 flex items-center">
 							<span className="text-2xl font-bold">StudyMate</span>
 						</Link>
 						<div className="hidden md:ml-6 md:flex md:flex-wrap gap-2">
-							<NavItem to="/">Home</NavItem>
-							<NavItem to="/assignments">Assignments</NavItem>
+							<NavItem to="/" exact={true}>
+								Home
+							</NavItem>
+							<NavItem to="/assignments" exact={true}>
+								Assignments
+							</NavItem>
 							{user && (
 								<>
-									<NavItem to="/assignments/pending">
+									<NavItem to="/assignments/pending" exact={true}>
 										Pending Assignments
 									</NavItem>
-									<NavItem to="/assignments/create">Create Assignments</NavItem>
-									<NavItem to="/assignments/attempted">
-										My Attempted Assignments
+									{/* <NavItem to="/assignments/create" exact={true}>
+										Create Assignments
 									</NavItem>
+									<NavItem to="/assignments/attempted" exact={true}>
+										My Attempted Assignments
+									</NavItem> */}
 								</>
 							)}
 						</div>
@@ -100,7 +108,7 @@ const Navbar = () => {
 									</button>
 									<ul
 										tabIndex={0}
-										className="menu menu-compact dropdown-content mt-3 p-2 shadow-lg bg-white text-gray-500  rounded-box w-52"
+										className="menu menu-compact dropdown-content mt-3 p-2 shadow-lg bg-white text-gray-500  rounded-box w-60"
 									>
 										<li>
 											<span className="font-semibold text-sm px-4 text-gray-500">
@@ -163,6 +171,7 @@ const Navbar = () => {
 					<div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
 						<MobileNavItem
 							to="/"
+							exact={true}
 							icon={Home}
 							onClick={() => setIsMenuOpen(false)}
 						>
@@ -170,6 +179,7 @@ const Navbar = () => {
 						</MobileNavItem>
 						<MobileNavItem
 							to="/assignments"
+							exact={true}
 							icon={BarChart}
 							onClick={() => setIsMenuOpen(false)}
 						>
@@ -179,6 +189,7 @@ const Navbar = () => {
 							<>
 								<MobileNavItem
 									to="/assignments/pending"
+									exact={true}
 									icon={DollarSign}
 									onClick={() => setIsMenuOpen(false)}
 								>
@@ -186,6 +197,7 @@ const Navbar = () => {
 								</MobileNavItem>
 								<MobileNavItem
 									to="/assignments/create"
+									exact={true}
 									icon={PlusCircle}
 									onClick={() => setIsMenuOpen(false)}
 								>
@@ -193,6 +205,7 @@ const Navbar = () => {
 								</MobileNavItem>
 								<MobileNavItem
 									to="/assignments/attempted"
+									exact={true}
 									icon={Heart}
 									onClick={() => setIsMenuOpen(false)}
 								>
