@@ -1,41 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import AssignmentCard from '../components/Cards/AssignmentCard';
+import Loader from '../components/Loader/Loader';
 import { useAuth } from '../hooks';
+import { fetchAllAssignments } from '../utils/queries';
 
 const AssignmentsPage = () => {
 	const { user } = useAuth();
-	const [assignments, setAssignments] = useState([]);
-
-	const fetchAssignments = async () => {
-		try {
-			const response = await fetch(
-				`${import.meta.env.VITE_API_BASE_URL}/assignments`
-			);
-			if (!response.ok) {
-				throw new Error('Failed to fetch assignments.');
-			}
-			const data = await response.json();
-			setAssignments(data);
-		} catch (err) {
-			console.error(err);
-			toast.error(err.message);
-		}
-	};
-
-	useEffect(() => {
-		fetchAssignments();
-	}, []);
+	const { data: assignments, isPending } = useQuery({
+		queryKey: ['assignments'],
+		queryFn: fetchAllAssignments,
+	});
 
 	const deleteAssignment = async (id) => {
-		setAssignments(assignments.filter((assignment) => assignment.id !== id));
+		console.log('Deleting assignment with ID:', id);
 	};
 
 	const updateAssignment = (assignment) => {
 		console.log('Update Assignment:', assignment);
 		toast.info('Redirect to update form!');
 	};
-
+	if (isPending) {
+		return <Loader />;
+	}
 	return (
 		<section className="container mx-auto px-4 mt-12 ">
 			<h2 className="text-3xl font-bold mb-4">Assignments</h2>

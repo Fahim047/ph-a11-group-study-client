@@ -6,6 +6,11 @@ const AssignmentDetailsPage = () => {
 	const location = useLocation();
 	const { state: assignment } = location;
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const difficultyStyle = {
+		easy: 'bg-green-100 text-green-600',
+		medium: 'bg-yellow-100 text-yellow-600',
+		hard: 'bg-red-100 text-red-600',
+	};
 
 	const handleModalOpen = () => setIsModalOpen(true);
 	const handleModalClose = () => setIsModalOpen(false);
@@ -42,16 +47,11 @@ const AssignmentDetailsPage = () => {
 							<strong>Marks:</strong> {assignment?.marks}
 						</span>
 						<span
-							className={`text-sm font-semibold px-3 py-1 rounded-full ${
-								assignment?.difficulty === 'easy'
-									? 'bg-green-100 text-green-600'
-									: assignment?.difficulty === 'medium'
-									? 'bg-yellow-100 text-yellow-600'
-									: 'bg-red-100 text-red-600'
+							className={`text-sm font-semibold px-3 py-1 rounded-full capitalize ${
+								assignment?.difficulty && difficultyStyle[assignment.difficulty]
 							}`}
 						>
-							{assignment?.difficulty.charAt(0).toUpperCase() +
-								assignment?.difficulty.slice(1)}
+							{assignment?.difficulty}
 						</span>
 					</div>
 					<p>

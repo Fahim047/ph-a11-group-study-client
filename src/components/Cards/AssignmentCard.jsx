@@ -9,9 +9,14 @@ const AssignmentCard = ({
 	onUpdate,
 }) => {
 	const navigate = useNavigate();
+	const difficultyStyle = {
+		easy: 'bg-green-100 text-green-600',
+		medium: 'bg-yellow-100 text-yellow-600',
+		hard: 'bg-red-100 text-red-600',
+	};
 
 	const handleDelete = () => {
-		if (assignment.creatorEmail !== currentUserEmail) {
+		if (assignment?.author?.email !== currentUserEmail) {
 			toast.error('You can only delete assignments you created.');
 			return;
 		}
@@ -26,7 +31,7 @@ const AssignmentCard = ({
 	};
 
 	const handleUpdate = () => {
-		if (assignment.creatorEmail !== currentUserEmail) {
+		if (assignment.author?.email !== currentUserEmail) {
 			toast.error('You can only update assignments you created.');
 			return;
 		}
@@ -48,11 +53,7 @@ const AssignmentCard = ({
 				/>
 				<span
 					className={`absolute top-3 right-3 px-3 py-1 text-xs font-semibold rounded-full ${
-						assignment.difficulty === 'easy'
-							? 'bg-green-100 text-green-600'
-							: assignment.difficulty === 'medium'
-							? 'bg-yellow-100 text-yellow-600'
-							: 'bg-red-100 text-red-600'
+						assignment?.difficulty && difficultyStyle[assignment.difficulty]
 					}`}
 				>
 					{assignment.difficulty}
