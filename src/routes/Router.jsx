@@ -7,6 +7,7 @@ import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import MyAssignmentsPage from '../pages/MyAssignmentsPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import PendingAssignments from '../pages/PendingAssignmentsPage';
 
 const router = createBrowserRouter([
 	{
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
 			{
 				path: '/my-assignments',
 				element: <MyAssignmentsPage />,
+			},
+			{
+				path: '/assignments/pending',
+				element: <PendingAssignments />,
 			},
 			{
 				path: '*',
