@@ -122,7 +122,7 @@ const Navbar = () => {
 											</Link>
 										</li>
 										<li>
-											<Link to="/assignments/attempted">
+											<Link to="/my-assignments">
 												<Heart className="mr-2 h-5 w-5" />
 												My Attempted Assignments
 											</Link>
@@ -204,7 +204,7 @@ const Navbar = () => {
 									Create Assignments
 								</MobileNavItem>
 								<MobileNavItem
-									to="/assignments/attempted"
+									to="/my-assignments"
 									exact={true}
 									icon={Heart}
 									onClick={() => setIsMenuOpen(false)}
