@@ -1,6 +1,6 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const AssignmentCard = ({
 	assignment,
@@ -15,18 +15,22 @@ const AssignmentCard = ({
 		hard: 'bg-red-100 text-red-600',
 	};
 
-	const handleDelete = () => {
+	const handleDelete = async () => {
 		if (assignment?.author?.email !== currentUserEmail) {
 			toast.error('You can only delete assignments you created.');
 			return;
 		}
-
-		const confirmed = window.confirm(
-			'Are you sure you want to delete this assignment?'
-		);
-		if (confirmed) {
+		const result = await Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: 'red',
+			cancelButtonColor: 'gray',
+			confirmButtonText: 'Delete',
+		});
+		if (result.isConfirmed) {
 			onDelete(assignment.id);
-			toast.success('Assignment deleted successfully.');
 		}
 	};
 
@@ -44,7 +48,7 @@ const AssignmentCard = ({
 	};
 
 	return (
-		<div className="p-4 shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-blue-400 rounded-md">
+		<div className="shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-blue-400 rounded-md">
 			<div className="relative">
 				<img
 					className="h-48 w-full object-cover"
@@ -52,7 +56,7 @@ const AssignmentCard = ({
 					alt={assignment.title}
 				/>
 				<span
-					className={`absolute top-3 right-3 px-3 py-1 text-xs font-semibold rounded-full ${
+					className={`absolute top-3 right-3 px-3 py-1 text-xs font-semibold rounded-full capitalize ${
 						assignment?.difficulty && difficultyStyle[assignment.difficulty]
 					}`}
 				>
