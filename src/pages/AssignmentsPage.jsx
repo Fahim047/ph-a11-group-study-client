@@ -7,33 +7,25 @@ const AssignmentsPage = () => {
 	const { user } = useAuth();
 	const [assignments, setAssignments] = useState([]);
 
+	const fetchAssignments = async () => {
+		try {
+			const response = await fetch(
+				`${import.meta.env.VITE_API_BASE_URL}/assignments`
+			);
+			if (!response.ok) {
+				throw new Error('Failed to fetch assignments.');
+			}
+			const data = await response.json();
+			setAssignments(data);
+		} catch (err) {
+			console.error(err);
+			toast.error(err.message);
+		}
+	};
+
 	useEffect(() => {
 		fetchAssignments();
 	}, []);
-
-	const fetchAssignments = async () => {
-		const mockData = [
-			{
-				id: 1,
-				title: 'React Basics',
-				description: 'react assignment',
-				marks: 10,
-				difficulty: 'easy',
-				thumbnail: 'https://via.placeholder.com/150',
-				creatorEmail: user?.email || 'creator@example.com',
-			},
-			{
-				id: 2,
-				title: 'React Basics',
-				description: 'react assignment',
-				marks: 10,
-				difficulty: 'easy',
-				thumbnail: 'https://www.patterns.dev/img/reactjs/react-logo@3x.svg',
-				creatorEmail: user?.email || 'creator@example.com',
-			},
-		];
-		setAssignments(mockData);
-	};
 
 	const deleteAssignment = async (id) => {
 		setAssignments(assignments.filter((assignment) => assignment.id !== id));

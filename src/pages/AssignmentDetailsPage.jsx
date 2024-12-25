@@ -19,11 +19,11 @@ const AssignmentDetailsPage = () => {
 		<section className="container mx-auto mt-12 px-4">
 			<div className="max-w-4xl p-6 mx-auto bg-blue-100 rounded-lg shadow-lg">
 				{/* Assignment Thumbnail */}
-				{assignment?.thumbnail && (
+				{assignment?.imageURL && (
 					<div className="mb-6">
 						<img
-							src={assignment.thumbnail}
-							alt={`${assignment.title} thumbnail`}
+							src={assignment.imageURL}
+							alt={`${assignment.title} imageURL`}
 							className="w-full h-60 object-cover rounded-md"
 						/>
 					</div>
@@ -55,8 +55,8 @@ const AssignmentDetailsPage = () => {
 						</span>
 					</div>
 					<p>
-						<strong>Due Date:</strong>{' '}
-						{new Date(assignment?.dueDate).toLocaleDateString()}
+						<strong>Deadline:</strong>{' '}
+						{new Date(assignment?.deadline).toLocaleDateString()}
 					</p>
 				</div>
 

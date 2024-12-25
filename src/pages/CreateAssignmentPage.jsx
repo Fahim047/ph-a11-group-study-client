@@ -2,45 +2,61 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { toast } from 'react-toastify';
+import { useAuth } from '../hooks';
 
 const CreateAssignmentPage = () => {
+	const { user } = useAuth();
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [marks, setMarks] = useState('');
-	const [thumbnailUrl, setThumbnailUrl] = useState('');
+	const [imageURL, setImageURL] = useState('');
 	const [difficulty, setDifficulty] = useState('');
-	const [dueDate, setDueDate] = useState(null);
+	const [deadline, setDeadline] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleCreateAssignment = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
-
-		// Mock function for creating an assignment
+		if (!user) return;
 		try {
 			const assignmentData = {
 				title,
 				description,
 				marks,
-				thumbnailUrl,
+				imageURL,
 				difficulty,
-				dueDate,
+				deadline,
+				author: {
+					name: user?.displayName,
+					email: user?.email,
+					photoURL: user?.photoURL,
+				},
 			};
-
-			// Simulate API call
+			const response = await fetch(
+				`${import.meta.env.VITE_API_BASE_URL}/api/assignments`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(assignmentData),
+				}
+			);
+			if (!response.ok) {
+				throw new Error('Failed to create assignment. Please try again.');
+			}
+			const data = await response.json();
 			console.log('Assignment Created:', assignmentData);
-
-			// Success Notification
 			toast.success('Assignment created successfully!');
 			setTitle('');
 			setDescription('');
 			setMarks('');
-			setThumbnailUrl('');
+			setImageURL('');
 			setDifficulty('');
-			setDueDate(null);
-		} catch (error) {
-			toast.error('Failed to create assignment. Please try again.');
-			console.error(error);
+			setDeadline(null);
+		} catch (err) {
+			toast.error(err.message);
+			console.error(err);
 		} finally {
 			setIsLoading(false);
 		}
@@ -106,6 +122,7 @@ const CreateAssignmentPage = () => {
 							name="marks"
 							type="number"
 							value={marks}
+							min={10}
 							onChange={(e) => setMarks(e.target.value)}
 							required
 							className="text-gray-800 bg-transparent mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -113,22 +130,22 @@ const CreateAssignmentPage = () => {
 						/>
 					</div>
 
-					{/* Thumbnail URL */}
+					{/* imageURL URL */}
 					<div>
 						<label
-							htmlFor="thumbnailUrl"
+							htmlFor="imageURL"
 							className="block text-sm font-medium text-gray-700"
 						>
-							Thumbnail Image URL
+							imageURL Image URL
 						</label>
 						<input
-							id="thumbnailUrl"
+							id="imageURL"
 							type="text"
-							value={thumbnailUrl}
-							onChange={(e) => setThumbnailUrl(e.target.value)}
+							value={imageURL}
+							onChange={(e) => setImageURL(e.target.value)}
 							required
 							className="text-gray-800 bg-transparent mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-							placeholder="Enter thumbnail URL"
+							placeholder="Enter imageURL URL"
 						/>
 					</div>
 
@@ -156,20 +173,20 @@ const CreateAssignmentPage = () => {
 						</select>
 					</div>
 
-					{/* Due Date */}
+					{/* Deadline */}
 					<div>
 						<label
-							htmlFor="dueDate"
+							htmlFor="deadline"
 							className="block text-sm font-medium text-gray-700"
 						>
-							Due Date
+							Deadline
 						</label>
 						<DatePicker
-							id="dueDate"
-							selected={dueDate}
-							onChange={(date) => setDueDate(date)}
+							id="deadline"
+							selected={deadline}
+							onChange={(date) => setDeadline(date)}
 							dateFormat="dd/MM/yyyy"
-							placeholderText="Select due date"
+							placeholderText="Select deadline"
 							className="text-gray-800 bg-transparent mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
 							required
 						/>

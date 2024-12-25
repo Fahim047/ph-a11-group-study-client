@@ -43,7 +43,7 @@ const AssignmentCard = ({
 			<div className="relative">
 				<img
 					className="h-48 w-full object-cover"
-					src={assignment.thumbnail || 'https://via.placeholder.com/300'}
+					src={assignment.imageURL || 'https://via.placeholder.com/300'}
 					alt={assignment.title}
 				/>
 				<span

@@ -8,6 +8,8 @@ import LoginPage from '../pages/LoginPage';
 import MyAssignmentsPage from '../pages/MyAssignmentsPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import PendingAssignments from '../pages/PendingAssignmentsPage';
+import RegisterPage from '../pages/RegisterPage';
+import PrivateRoutes from './PrivateRoutes';
 
 const router = createBrowserRouter([
 	{
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
 				element: <LoginPage />,
 			},
 			{
+				path: '/register',
+				element: <RegisterPage />,
+			},
+			{
 				path: '/assignments',
 				element: <AssignmentsPage />,
 			},
@@ -33,11 +39,19 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/assignments/create',
-				element: <CreateAssignmentPage />,
+				element: (
+					<PrivateRoutes>
+						<CreateAssignmentPage />,
+					</PrivateRoutes>
+				),
 			},
 			{
 				path: '/my-assignments',
-				element: <MyAssignmentsPage />,
+				element: (
+					<PrivateRoutes>
+						<MyAssignmentsPage />,
+					</PrivateRoutes>
+				),
 			},
 			{
 				path: '/assignments/pending',
