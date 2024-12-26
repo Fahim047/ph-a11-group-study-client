@@ -1,9 +1,10 @@
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import apiClient from '../axios/apiClient';
 
 export const fetchAllAssignments = async () => {
 	try {
-		const response = await apiClient.get('/assignments');
+		const response = await axios.get('/assignments');
 		return response.data;
 	} catch (err) {
 		console.error(err);
