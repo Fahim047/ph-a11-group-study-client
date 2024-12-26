@@ -2,21 +2,24 @@ import {
 	BarChart,
 	DollarSign,
 	Heart,
-	Home,
+	// Home,
 	LogOut,
 	Menu,
+	Moon,
 	PlusCircle,
 	Send,
+	Sun,
 	X,
 } from 'lucide-react';
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../hooks';
+import { useAuth, useTheme } from '../../hooks';
 
 const Navbar = () => {
 	const { user, handleLogout } = useAuth();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const { darkMode, setDarkMode } = useTheme();
 	const navigate = useNavigate();
 
 	const logout = async () => {
@@ -25,12 +28,14 @@ const Navbar = () => {
 		toast.success('Logged out successfully.');
 	};
 
+	const toggleTheme = () => setDarkMode(!darkMode);
+
 	const NavItem = ({ to, children, onClick, exact }) => (
 		<NavLink
 			to={to}
 			end={exact}
 			className={({ isActive }) =>
-				`px-3 py-2 rounded-md text-sm text-nowrap font-medium transition duration-150 ease-in-out ${
+				`px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out ${
 					isActive
 						? 'text-blue-600 bg-indigo-50'
 						: 'text-gray-600 hover:text-indigo-600 hover:bg-gray-50'
@@ -61,129 +66,152 @@ const Navbar = () => {
 	);
 
 	return (
-		<nav className="bg-gradient-to-r from-blue-500 via-blue-300 to-blue-500 text-white sticky top-0 z-50 shadow-lg">
+		<nav
+			className={`sticky top-0 z-50 shadow-lg transition-colors duration-300 ${
+				darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
+			}`}
+		>
 			<div className="container mx-auto px-4 py-4">
-				<div className="flex justify-between">
-					<div className="flex items-center">
-						<Link to="/" className="flex-shrink-0 flex items-center">
-							<span className="text-2xl font-bold">StudyMate</span>
-						</Link>
-						<div className="hidden md:ml-6 md:flex md:flex-wrap gap-2">
-							<NavItem to="/" exact={true}>
-								Home
-							</NavItem>
-							<NavItem to="/assignments" exact={true}>
-								Assignments
-							</NavItem>
-							{user && (
-								<>
-									<NavItem to="/assignments/pending" exact={true}>
-										Pending Assignments
-									</NavItem>
-									{/* <NavItem to="/assignments/create" exact={true}>
-										Create Assignments
-									</NavItem>
-									<NavItem to="/assignments/attempted" exact={true}>
-										My Attempted Assignments
-									</NavItem> */}
-								</>
-							)}
-						</div>
-					</div>
-					<div className="hidden md:ml-2 md:flex md:items-center">
-						{user ? (
-							<div className="flex items-center space-x-4">
-								<div className="dropdown dropdown-end">
-									<button
-										className="btn btn-ghost btn-circle avatar"
-										tabIndex={0}
-									>
-										<div className="w-10 rounded-full">
-											<img
-												src={user?.photoURL || 'https://i.pravatar.cc/150'}
-												alt="User avatar"
-												title={user?.displayName}
-												referrerPolicy="no-referrer"
-											/>
-										</div>
-									</button>
-									<ul
-										tabIndex={0}
-										className="menu menu-compact dropdown-content mt-3 p-2 shadow-lg bg-white text-gray-500  rounded-box w-60"
-									>
-										<li>
-											<span className="font-semibold text-sm px-4 text-gray-500">
-												{user?.displayName}
-											</span>
-										</li>
-										<li>
-											<Link to="/assignments/create">
-												<PlusCircle className="mr-2 h-5 w-5" />
-												Create Assignments
-											</Link>
-										</li>
-										<li>
-											<Link to="/my-assignments">
-												<Heart className="mr-2 h-5 w-5" />
-												My Assignments
-											</Link>
-										</li>
-										<li>
-											<Link to="/my-submissions">
-												<Send className="mr-2 h-5 w-5" />
-												My Submissions
-											</Link>
-										</li>
-										<li>
-											<button
-												className="btn btn-error text-white mt-2"
-												onClick={logout}
-											>
-												<LogOut className="mr-2 h-5 w-5" />
-												Logout
-											</button>
-										</li>
-									</ul>
-								</div>
-							</div>
-						) : (
-							<div>
-								<Link
-									to="/login"
-									className="px-3 py-2 rounded-md text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
-								>
-									Log in
-								</Link>
-							</div>
+				<div className="flex justify-between items-center">
+					{/* Logo */}
+					<Link to="/" className="text-2xl font-bold">
+						StudyMate
+					</Link>
+
+					{/* Desktop Nav */}
+					<div className="hidden md:flex md:items-center md:space-x-6">
+						{/* <NavItem to="/" exact={true}>
+							Home
+						</NavItem> */}
+						<NavItem to="/assignments" exact={true}>
+							Assignments
+						</NavItem>
+						{user && (
+							<>
+								<NavItem to="/assignments/pending" exact={true}>
+									Pending Assignments
+								</NavItem>
+								<NavItem to="/assignments/create" exact={true}>
+									Create Assignments
+								</NavItem>
+								<NavItem to="/my-assignments" exact={true}>
+									My Assignments
+								</NavItem>
+							</>
 						)}
 					</div>
-					<div className="-mr-2 flex items-center md:hidden">
+
+					{/* Right Side */}
+					<div className="flex items-center space-x-4">
+						{/* Theme Toggle Button */}
 						<button
-							onClick={() => setIsMenuOpen(!isMenuOpen)}
-							className="inline-flex items-center justify-center p-2 rounded-md border border-white focus:outline-none focus:ring-2 focus:ring-inset"
+							onClick={toggleTheme}
+							className="p-2 rounded-full focus:outline-none transition duration-300"
+							aria-label="Toggle Theme"
 						>
-							<span className="sr-only">Open main menu</span>
-							{isMenuOpen ? (
-								<X className="block h-6 w-6" aria-hidden="true" />
+							{darkMode ? (
+								<Sun className="h-6 w-6" />
 							) : (
-								<Menu className="block h-6 w-6" aria-hidden="true" />
+								<Moon className="h-6 w-6" />
 							)}
 						</button>
-					</div>
-				</div>
-			</div>
 
-			{isMenuOpen && (
-				<div className="md:hidden">
-					<div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-						<MobileNavItem
+						{/* User Dropdown or Login Button */}
+						{user ? (
+							<div className="dropdown dropdown-end">
+								<button
+									className="btn btn-ghost btn-circle avatar"
+									tabIndex={0}
+								>
+									<div className="w-10 rounded-full">
+										<img
+											src={user?.photoURL || 'https://i.pravatar.cc/150'}
+											alt="User avatar"
+											title={user?.displayName}
+											referrerPolicy="no-referrer"
+										/>
+									</div>
+								</button>
+								<ul
+									tabIndex={0}
+									className={`menu menu-compact dropdown-content mt-3 p-2 shadow-lg ${
+										darkMode
+											? 'bg-gray-800 text-white'
+											: 'bg-white text-gray-900'
+									} rounded-box w-60`}
+								>
+									<li>
+										<span className="font-semibold text-sm px-4">
+											{user?.displayName}
+										</span>
+									</li>
+									<li>
+										<Link to="/assignments/create">
+											<PlusCircle className="mr-2 h-5 w-5" />
+											Create Assignments
+										</Link>
+									</li>
+									<li>
+										<Link to="/my-assignments">
+											<Heart className="mr-2 h-5 w-5" />
+											My Assignments
+										</Link>
+									</li>
+									<li>
+										<Link to="/my-submissions">
+											<Send className="mr-2 h-5 w-5" />
+											My Submissions
+										</Link>
+									</li>
+									<li>
+										<button
+											className="btn btn-error text-white mt-2"
+											onClick={logout}
+										>
+											<LogOut className="mr-2 h-5 w-5" />
+											Logout
+										</button>
+									</li>
+								</ul>
+							</div>
+						) : (
+							<Link
+								to="/login"
+								className={`px-3 py-2 rounded-md text-sm font-medium ${
+									darkMode
+										? 'bg-indigo-600 text-white hover:bg-indigo-700'
+										: 'bg-blue-600 text-white hover:bg-blue-700'
+								}`}
+							>
+								Log in
+							</Link>
+						)}
+					</div>
+
+					{/* Mobile Menu Toggle */}
+					<button
+						onClick={() => setIsMenuOpen(!isMenuOpen)}
+						className="md:hidden p-2 rounded-md border focus:outline-none"
+					>
+						{isMenuOpen ? (
+							<X className="block h-6 w-6" aria-hidden="true" />
+						) : (
+							<Menu className="block h-6 w-6" aria-hidden="true" />
+						)}
+					</button>
+				</div>
+
+				{/* Mobile Nav */}
+				{isMenuOpen && (
+					<div className="md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3">
+						{/* <MobileNavItem
 							to="/"
 							exact={true}
 							icon={Home}
 							onClick={() => setIsMenuOpen(false)}
 						>
 							Home
-						</MobileNavItem>
+						</MobileNavItem> */}
 						<MobileNavItem
 							to="/assignments"
 							exact={true}
@@ -229,8 +257,8 @@ const Navbar = () => {
 							</>
 						)}
 					</div>
-				</div>
-			)}
+				)}
+			</div>
 		</nav>
 	);
 };
