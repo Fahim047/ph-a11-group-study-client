@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import GoogleImage from '../assets/google.svg';
+import apiClient from '../axios/apiClient';
 import { useAuth } from '../hooks';
 const LoginPage = () => {
 	const [email, setEmail] = useState('');
@@ -19,7 +20,19 @@ const LoginPage = () => {
 		setIsLoading(true);
 
 		try {
-			await handleSignInWithEmail(email, password);
+			const result = await handleSignInWithEmail(email, password);
+			const user = { email: result?.user?.email };
+
+			// const response = await axios.post(
+			// 	`${import.meta.env.VITE_API_BASE_URL}/jwt`,
+			// 	{
+			// 		userEmail,
+			// 	},
+			// 	{
+			// 		withCredentials: true,
+			// 	}
+			// );
+			apiClient.post('/jwt', user);
 			toast.success('Login successful');
 			navigate(location?.state || '/');
 			setEmail('');

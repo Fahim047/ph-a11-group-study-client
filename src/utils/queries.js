@@ -1,42 +1,35 @@
 import { toast } from 'react-toastify';
+import apiClient from '../axios/apiClient';
 
 export const fetchAllAssignments = async () => {
 	try {
-		const response = await fetch(
-			`${import.meta.env.VITE_API_BASE_URL}/assignments`
-		);
-		if (!response.ok) {
-			throw new Error('Failed to fetch assignments.');
-		}
-		const data = await response.json();
-		return data;
+		const response = await apiClient.get('/assignments');
+		return response.data;
 	} catch (err) {
 		console.error(err);
-		toast.error(err.message);
+		toast.error('Failed to fetch assignments: ' + err.message);
+		throw err;
 	}
 };
 
 export const deleteAssignmentById = async (id) => {
-	const response = await fetch(
-		`${import.meta.env.VITE_API_BASE_URL}/assignments/${id}`,
-		{ method: 'DELETE' }
-	);
-	if (!response.ok) throw new Error('Failed to delete assignment.');
-	return id;
+	try {
+		const response = await apiClient.delete(`/assignments/${id}`);
+		return id;
+	} catch (err) {
+		console.error(err);
+		toast.error('Failed to delete assignment: ' + err.message);
+		throw err;
+	}
 };
 
 export const fetchAllPendingAssignments = async () => {
 	try {
-		const response = await fetch(
-			`${import.meta.env.VITE_API_BASE_URL}/assignments/pending`
-		);
-		if (!response.ok) {
-			throw new Error('Failed to fetch assignments.');
-		}
-		const data = await response.json();
-		return data;
+		const response = await apiClient.get('/assignments/pending');
+		return response.data;
 	} catch (err) {
 		console.error(err);
-		toast.error(err.message);
+		toast.error('Failed to fetch pending assignments: ' + err.message);
+		throw err;
 	}
 };

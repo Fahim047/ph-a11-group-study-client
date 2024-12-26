@@ -134,26 +134,26 @@ const Navbar = () => {
 								</button>
 								<ul
 									tabIndex={0}
-									className={`menu menu-compact dropdown-content mt-3 p-2 shadow-lg rounded-box w-60`}
+									className={`bg-white dark:bg-gray-900 menu menu-compact dropdown-content mt-3 p-2 shadow-lg rounded-box w-60`}
 								>
-									<li>
+									<li className="hover:bg-blue-100 dark:hover:text-blue-600">
 										<span className="font-semibold text-sm px-4">
 											{user?.displayName}
 										</span>
 									</li>
-									<li>
+									<li className="hover:bg-blue-100 dark:hover:text-blue-600">
 										<Link to="/assignments/create">
 											<PlusCircle className="mr-2 h-5 w-5" />
 											Create Assignments
 										</Link>
 									</li>
-									<li>
+									<li className="hover:bg-blue-100 dark:hover:text-blue-600">
 										<Link to="/my-assignments">
 											<Heart className="mr-2 h-5 w-5" />
 											My Assignments
 										</Link>
 									</li>
-									<li>
+									<li className="hover:bg-blue-100 dark:hover:text-blue-600">
 										<Link to="/my-submissions">
 											<Send className="mr-2 h-5 w-5" />
 											My Submissions

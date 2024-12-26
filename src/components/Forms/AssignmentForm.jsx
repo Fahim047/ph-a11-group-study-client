@@ -48,7 +48,7 @@ const AssignmentForm = ({ onSubmit, assignment = {}, mode = 'create' }) => {
 					type="text"
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
-					className="bg-transparent mt-1 block w-full px-3 py-2 border rounded-md"
+					className="mt-1 block w-full px-3 py-2 border rounded-md dark:text-black"
 					required
 				/>
 			</div>
@@ -61,7 +61,7 @@ const AssignmentForm = ({ onSubmit, assignment = {}, mode = 'create' }) => {
 					id="description"
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
-					className="bg-transparent mt-1 block w-full px-3 py-2 border rounded-md"
+					className="mt-1 block w-full px-3 py-2 border rounded-md"
 					rows="4"
 					required
 				></textarea>
@@ -76,7 +76,7 @@ const AssignmentForm = ({ onSubmit, assignment = {}, mode = 'create' }) => {
 					type="number"
 					value={marks}
 					onChange={(e) => setMarks(e.target.value)}
-					className="bg-transparent mt-1 block w-full px-3 py-2 border rounded-md"
+					className="mt-1 block w-full px-3 py-2 border rounded-md"
 					min="10"
 					required
 				/>
@@ -91,7 +91,7 @@ const AssignmentForm = ({ onSubmit, assignment = {}, mode = 'create' }) => {
 					type="text"
 					value={imageURL}
 					onChange={(e) => setImageURL(e.target.value)}
-					className="bg-transparent mt-1 block w-full px-3 py-2 border rounded-md"
+					className="mt-1 block w-full px-3 py-2 border rounded-md"
 					required
 				/>
 			</div>
@@ -104,7 +104,7 @@ const AssignmentForm = ({ onSubmit, assignment = {}, mode = 'create' }) => {
 					id="difficulty"
 					value={difficulty}
 					onChange={(e) => setDifficulty(e.target.value)}
-					className="bg-transparent mt-1 block w-full px-3 py-2 border rounded-md"
+					className=" mt-1 block w-full px-3 py-2 border rounded-md"
 					required
 				>
 					<option value="" disabled>
@@ -125,7 +125,7 @@ const AssignmentForm = ({ onSubmit, assignment = {}, mode = 'create' }) => {
 					selected={deadline}
 					onChange={(date) => setDeadline(date)}
 					dateFormat="dd/MM/yyyy"
-					className="bg-transparent mt-1 block w-full px-3 py-2 border rounded-md"
+					className="mt-1 block w-full px-3 py-2 border rounded-md"
 					required
 				/>
 			</div>

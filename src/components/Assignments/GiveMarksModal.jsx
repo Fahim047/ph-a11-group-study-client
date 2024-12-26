@@ -37,7 +37,7 @@ const GiveMarksModal = ({ submission, onClose }) => {
 
 	return (
 		<div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-[999] overflow-y-auto">
-			<div className="max-w-xl bg-gray-800 p-6 rounded shadow-md">
+			<div className="max-w-xl bg-white dark:bg-gray-800 p-6 rounded shadow-md">
 				<h3 className="text-xl font-bold mb-4 text-blue-400">
 					Assignment Evaluation Form
 				</h3>

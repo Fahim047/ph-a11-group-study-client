@@ -1,18 +1,23 @@
-import axios from 'axios';
+import apiClient from '../axios/apiClient';
 
 export const createSubmission = async (submissionData) => {
-	const response = await axios.post(
-		`${import.meta.env.VITE_API_BASE_URL}/submissions`,
-		submissionData
-	);
-	return response.data;
+	try {
+		const response = await apiClient.post('/submissions', submissionData);
+		return response.data;
+	} catch (error) {
+		throw new Error('Error creating submission: ' + error.message);
+	}
 };
+
 export const fetchAllPendingSubmissions = async () => {
-	const response = await axios.get(
-		`${import.meta.env.VITE_API_BASE_URL}/submissions/pending`
-	);
-	return response.data;
+	try {
+		const response = await apiClient.get('/submissions/pending');
+		return response.data;
+	} catch (error) {
+		throw new Error('Error fetching pending submissions: ' + error.message);
+	}
 };
+
 export const updateSubmissionMarks = async ({
 	submissionId,
 	obtainedMarks,
@@ -24,18 +29,24 @@ export const updateSubmissionMarks = async ({
 		obtainedMarks,
 		feedback
 	);
-	const response = await axios.put(
-		`${import.meta.env.VITE_API_BASE_URL}/submissions/${submissionId}`,
-		{ obtainedMarks, feedback }
-	);
-	return response.data;
+	try {
+		const response = await apiClient.put(`/submissions/${submissionId}`, {
+			obtainedMarks,
+			feedback,
+		});
+		return response.data;
+	} catch (error) {
+		throw new Error('Error updating submission marks: ' + error.message);
+	}
 };
+
 export const fetchSubmissions = async (userEmail) => {
-	const response = await axios.get(
-		`${import.meta.env.VITE_API_BASE_URL}/submissions`,
-		{
+	try {
+		const response = await apiClient.get('/submissions', {
 			params: { userEmail },
-		}
-	);
-	return response.data;
+		});
+		return response.data;
+	} catch (error) {
+		throw new Error('Error fetching submissions: ' + error.message);
+	}
 };
