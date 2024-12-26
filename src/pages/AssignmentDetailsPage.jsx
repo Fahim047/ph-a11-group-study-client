@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import TakeAssignmentModal from '../components/Assignments/TakeAssignmentModal';
 import { useAuth } from '../hooks';
 
 const AssignmentDetailsPage = () => {
 	const { user } = useAuth();
+	const navigate = useNavigate();
 	const location = useLocation();
 	const { state: assignment } = location;
 	console.log(assignment);
@@ -15,7 +17,14 @@ const AssignmentDetailsPage = () => {
 		hard: 'bg-red-100 text-red-600',
 	};
 
-	const handleModalOpen = () => setIsModalOpen(true);
+	const handleModalOpen = () => {
+		if (!user) {
+			toast.error('You must be logged in to take an assignment');
+			navigate('/login');
+			return;
+		}
+		setIsModalOpen(true);
+	};
 	const handleModalClose = () => setIsModalOpen(false);
 
 	const handleSubmit = async (formData) => {

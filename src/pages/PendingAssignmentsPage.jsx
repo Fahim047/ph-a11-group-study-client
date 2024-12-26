@@ -1,11 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import GiveMarksModal from '../components/Assignments/GiveMarksModal';
+import EmptyState from '../components/Cards/EmptyState';
 import SpinnerCircle from '../components/Loader/SpinnerCircle';
 import { fetchAllPendingSubmissions } from '../utils/api-utils';
 
 const PendingAssignments = () => {
-	const { data: pendingSubmissions, isPending } = useQuery({
+	const {
+		data: pendingSubmissions,
+		isPending,
+		isError,
+		error,
+	} = useQuery({
 		queryKey: ['pendingSubmissions'],
 		queryFn: fetchAllPendingSubmissions,
 	});
@@ -21,6 +27,28 @@ const PendingAssignments = () => {
 	};
 
 	if (isPending) return <SpinnerCircle />;
+
+	if (isError) {
+		return (
+			<div className="min-h-[400px] flex flex-col justify-center items-center">
+				<div className="text-red-600 text-lg font-semibold mb-2">
+					Oops! Something went wrong.
+				</div>
+				<div className="mb-4">
+					{error?.message || 'An unknown error occurred while fetching data.'}
+				</div>
+			</div>
+		);
+	}
+
+	if (!pendingSubmissions || pendingSubmissions.length === 0) {
+		return (
+			<EmptyState
+				title="No Pending Submissions"
+				message="You have no pending submissions at the moment."
+			/>
+		);
+	}
 
 	return (
 		<div className="p-6 font-sans">
