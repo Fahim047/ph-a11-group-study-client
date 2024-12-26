@@ -12,7 +12,7 @@ const AssignmentsPage = () => {
 	const { user } = useAuth();
 	const queryClient = useQueryClient();
 
-	const { data: assignments = [], isLoading } = useQuery({
+	const { data: assignments, isLoading } = useQuery({
 		queryKey: ['assignments'],
 		queryFn: fetchAllAssignments,
 	});
@@ -69,7 +69,7 @@ const AssignmentsPage = () => {
 		<section className="container mx-auto px-4 mt-12">
 			<h2 className="text-3xl font-bold mb-4">Assignments</h2>
 			<div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-6">
-				{assignments.map((assignment) => (
+				{assignments?.map((assignment) => (
 					<AssignmentCard
 						key={assignment.id}
 						assignment={assignment}

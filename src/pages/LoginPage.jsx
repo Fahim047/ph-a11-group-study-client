@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import GoogleImage from '../assets/google.svg';
+import apiClient from '../axios/apiClient';
 import { useAuth } from '../hooks';
 const LoginPage = () => {
 	const [email, setEmail] = useState('');
@@ -22,10 +23,7 @@ const LoginPage = () => {
 		try {
 			const result = await handleSignInWithEmail(email, password);
 			const user = { email: result?.user?.email };
-			const response = await axios.post(
-				`{import.meta.env.VITE_API_BASE_URL}/jwt`,
-				user
-			);
+			const response = await apiClient.post(`/jwt`, user);
 			console.log(response.data);
 			toast.success('Login successful');
 			navigate(location?.state || '/');
@@ -48,9 +46,10 @@ const LoginPage = () => {
 			const result = await handleSignInWithGoogle();
 			const user = { email: result?.user?.email };
 			const response = await axios.post(
-				`{import.meta.env.VITE_API_BASE_URL}/jwt`,
+				`${import.meta.env.VITE_API_BASE_URL}/jwt`,
 				user
 			);
+			console.log(response.data);
 			toast.success('Logged in successfully!');
 			navigate(location?.state || '/');
 		} catch (err) {
