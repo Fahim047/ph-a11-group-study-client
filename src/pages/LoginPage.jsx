@@ -22,17 +22,7 @@ const LoginPage = () => {
 		try {
 			const result = await handleSignInWithEmail(email, password);
 			const user = { email: result?.user?.email };
-
-			// const response = await axios.post(
-			// 	`${import.meta.env.VITE_API_BASE_URL}/jwt`,
-			// 	{
-			// 		userEmail,
-			// 	},
-			// 	{
-			// 		withCredentials: true,
-			// 	}
-			// );
-			apiClient.post('/jwt', user);
+			await apiClient.post('/jwt', user);
 			toast.success('Login successful');
 			navigate(location?.state || '/');
 			setEmail('');
@@ -51,7 +41,9 @@ const LoginPage = () => {
 		setError('');
 		setIsLoading(true);
 		try {
-			await handleSignInWithGoogle();
+			const result = await handleSignInWithGoogle();
+			const user = { email: result?.user?.email };
+			await apiClient.post('/jwt', user);
 			toast.success('Logged in successfully!');
 			navigate(location?.state || '/');
 		} catch (err) {
