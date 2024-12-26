@@ -47,8 +47,8 @@ const CreateAssignmentPage = () => {
 	};
 
 	return (
-		<div className="min-h-screen bg-blue-100 flex items-center justify-center py-12 px-6 sm:px-8">
-			<div className="max-w-lg bg-white w-full rounded-lg shadow-md p-6">
+		<div className="min-h-screen flex items-center justify-center py-12 px-6 sm:px-8">
+			<div className="max-w-lg w-full rounded-lg shadow-md p-6">
 				{/* Pass down the create mode */}
 				<AssignmentForm
 					mode="create"

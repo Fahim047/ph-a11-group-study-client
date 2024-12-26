@@ -74,7 +74,7 @@ const Navbar = () => {
 			<div className="container mx-auto px-4 py-4">
 				<div className="flex justify-between items-center">
 					{/* Logo */}
-					<Link to="/" className="text-2xl font-bold">
+					<Link to="/" className="text-2xl font-bold text-blue-600">
 						StudyMate
 					</Link>
 
@@ -134,11 +134,7 @@ const Navbar = () => {
 								</button>
 								<ul
 									tabIndex={0}
-									className={`menu menu-compact dropdown-content mt-3 p-2 shadow-lg ${
-										darkMode
-											? 'bg-gray-800 text-white'
-											: 'bg-white text-gray-900'
-									} rounded-box w-60`}
+									className={`menu menu-compact dropdown-content mt-3 p-2 shadow-lg rounded-box w-60`}
 								>
 									<li>
 										<span className="font-semibold text-sm px-4">
@@ -177,11 +173,8 @@ const Navbar = () => {
 						) : (
 							<Link
 								to="/login"
-								className={`px-3 py-2 rounded-md text-sm font-medium ${
-									darkMode
-										? 'bg-indigo-600 text-white hover:bg-indigo-700'
-										: 'bg-blue-600 text-white hover:bg-blue-700'
-								}`}
+								className={`px-3 py-2 rounded-md text-sm font-medium  bg-blue-600 text-white hover:bg-blue-700
+							`}
 							>
 								Log in
 							</Link>

@@ -18,6 +18,7 @@ const MainLayout = () => {
 			<Navbar />
 			<div className="min-h-screen">
 				<Outlet />
+				<div className="border border-gray-200"></div>
 			</div>
 			<Footer />
 		</div>
