@@ -30,3 +30,12 @@ export const updateSubmissionMarks = async ({
 	);
 	return response.data;
 };
+export const fetchSubmissions = async (userEmail) => {
+	const response = await axios.get(
+		`${import.meta.env.VITE_API_BASE_URL}/submissions`,
+		{
+			params: { userEmail },
+		}
+	);
+	return response.data;
+};

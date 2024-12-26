@@ -12,7 +12,6 @@ const AssignmentsPage = () => {
 	const { user } = useAuth();
 	const queryClient = useQueryClient();
 
-	// Fetch assignments
 	const { data: assignments = [], isLoading } = useQuery({
 		queryKey: ['assignments'],
 		queryFn: fetchAllAssignments,
@@ -21,7 +20,6 @@ const AssignmentsPage = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [currentAssignment, setCurrentAssignment] = useState(null);
 
-	// Mutations
 	const updateAssignmentMutation = useMutation({
 		mutationFn: async (updatedData) => {
 			const response = await fetch(

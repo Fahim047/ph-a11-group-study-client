@@ -39,10 +39,13 @@ const GiveMarksModal = ({ submission, onClose }) => {
 		<div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-[999] overflow-y-auto">
 			<div className="max-w-xl bg-gray-800 p-6 rounded shadow-md">
 				<h3 className="text-xl font-bold mb-4 text-blue-400">
-					Mark Assignment
+					Assignment Evaluation Form
 				</h3>
 				<p className="mb-2">
 					<strong>Title:</strong> {submission.assignmentId?.title}
+				</p>
+				<p className="mb-2">
+					<strong>Total Marks:</strong> {submission.assignmentId?.marks}
 				</p>
 				<p className="mb-2">
 					<strong>Examinee:</strong> {submission.userEmail}
@@ -54,19 +57,20 @@ const GiveMarksModal = ({ submission, onClose }) => {
 						rel="noopener noreferrer"
 						className="text-blue-500 underline"
 					>
-						View Google Docs
+						View Assignment
 					</a>
 				</p>
 				<form onSubmit={handleSubmit}>
 					<div className="mb-4">
-						<label className="block mb-2 font-bold">Marks</label>
+						<label className="block mb-2 font-bold">{`Obtained Marks (out of ${submission.assignmentId?.marks})`}</label>
 						<input
 							type="number"
 							name="obtainedMarks"
 							value={obtainedMarks}
+							max={submission.assignmentId?.marks}
 							onChange={(e) => setObtainedMarks(e.target.value)}
 							className="bg-transparent w-full border border-gray-300 rounded px-3 py-2"
-							placeholder="Enter marks"
+							placeholder="Give marks"
 							required
 						/>
 					</div>
@@ -77,7 +81,7 @@ const GiveMarksModal = ({ submission, onClose }) => {
 							value={feedback}
 							onChange={(e) => setFeedback(e.target.value)}
 							className="bg-transparent w-full border border-gray-300 rounded px-3 py-2"
-							placeholder="Enter feedback (optional)"
+							placeholder="Give a feedback to the examinee (optional)"
 						></textarea>
 					</div>
 					<div className="flex justify-end">

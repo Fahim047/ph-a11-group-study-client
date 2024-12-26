@@ -6,6 +6,7 @@ import {
 	LogOut,
 	Menu,
 	PlusCircle,
+	Send,
 	X,
 } from 'lucide-react';
 import { useState } from 'react';
@@ -124,7 +125,13 @@ const Navbar = () => {
 										<li>
 											<Link to="/my-assignments">
 												<Heart className="mr-2 h-5 w-5" />
-												My Attempted Assignments
+												My Assignments
+											</Link>
+										</li>
+										<li>
+											<Link to="/my-submissions">
+												<Send className="mr-2 h-5 w-5" />
+												My Submissions
 											</Link>
 										</li>
 										<li>
@@ -209,7 +216,15 @@ const Navbar = () => {
 									icon={Heart}
 									onClick={() => setIsMenuOpen(false)}
 								>
-									My Attempted Assignments
+									My Assignments
+								</MobileNavItem>
+								<MobileNavItem
+									to="/my-submissions"
+									exact={true}
+									icon={Send}
+									onClick={() => setIsMenuOpen(false)}
+								>
+									My Submissions
 								</MobileNavItem>
 							</>
 						)}

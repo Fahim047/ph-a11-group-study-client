@@ -6,6 +6,7 @@ import CreateAssignmentPage from '../pages/CreateAssignmentPage';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import MyAssignmentsPage from '../pages/MyAssignmentsPage';
+import MySubmissionsPage from '../pages/MySubmissionPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import PendingAssignments from '../pages/PendingAssignmentsPage';
 import RegisterPage from '../pages/RegisterPage';
@@ -50,6 +51,14 @@ const router = createBrowserRouter([
 				element: (
 					<PrivateRoutes>
 						<MyAssignmentsPage />,
+					</PrivateRoutes>
+				),
+			},
+			{
+				path: '/my-submissions',
+				element: (
+					<PrivateRoutes>
+						<MySubmissionsPage />,
 					</PrivateRoutes>
 				),
 			},

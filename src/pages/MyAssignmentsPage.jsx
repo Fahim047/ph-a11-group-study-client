@@ -1,88 +1,107 @@
-// Importing necessary dependencies
-import React from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import { toast } from 'react-toastify'; // API utility to fetch submissions
+import AssignmentCard from '../components/Cards/AssignmentCard';
+import AssignmentForm from '../components/Forms/AssignmentForm';
+import Modal from '../components/Modal/Modal';
+import { useAuth } from '../hooks';
+import { deleteAssignmentById, fetchAllAssignments } from '../utils/queries';
 
-// Mock data for submitted assignments
-const mockAssignments = [
-	{
-		id: 1,
-		title: 'Assignment 1',
-		status: 'Submitted',
-		totalMarks: 100,
-		obtainedMarks: 90,
-		feedback: 'Great work!',
-	},
-	{
-		id: 2,
-		title: 'Assignment 2',
-		status: 'Submitted',
-		totalMarks: 50,
-		obtainedMarks: 45,
-		feedback: 'Well done!',
-	},
-	{
-		id: 3,
-		title: 'Assignment 3',
-		status: 'Pending Review',
-		totalMarks: 75,
-		obtainedMarks: null,
-		feedback: null,
-	},
-];
-
-// Functional Component
 const MyAssignmentsPage = () => {
+	const { user } = useAuth();
+	const queryClient = useQueryClient();
+	const {
+		data: assignments,
+		isLoading,
+		isError,
+	} = useQuery({
+		queryKey: ['myAssignments'],
+		queryFn: () => fetchAllAssignments(),
+	});
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [currentAssignment, setCurrentAssignment] = useState(null);
+
+	const updateAssignmentMutation = useMutation({
+		mutationFn: async (updatedData) => {
+			const response = await fetch(
+				`${import.meta.env.VITE_API_BASE_URL}/assignments/${
+					currentAssignment.id
+				}`,
+				{
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(updatedData),
+				}
+			);
+			if (!response.ok) throw new Error('Failed to update assignment.');
+			return response.json();
+		},
+		onSuccess: () => {
+			toast.success('Assignment updated successfully!');
+			queryClient.invalidateQueries(['myAssignments']);
+			setIsModalOpen(false);
+		},
+		onError: () => {
+			toast.error('Failed to update assignment.');
+		},
+	});
+
+	const deleteAssignmentMutation = useMutation({
+		mutationFn: deleteAssignmentById,
+		onSuccess: () => {
+			toast.success('Assignment deleted successfully!');
+			queryClient.invalidateQueries(['assignments']);
+		},
+		onError: () => {
+			toast.error('Failed to delete assignment.');
+		},
+	});
+
+	const openUpdateModal = (assignment) => {
+		setCurrentAssignment(assignment);
+		setIsModalOpen(true);
+	};
+
+	if (isLoading) {
+		return <p className="text-center my-8">Loading your assignments...</p>;
+	}
+
+	if (isError) {
+		toast.error('Failed to load assignments.');
+		return (
+			<p className="text-center my-8 text-red-500">
+				Error loading assignments.
+			</p>
+		);
+	}
+
 	return (
-		<div className="container mx-auto px-4">
-			<h2 className="text-center text-3xl font-bold my-8">
-				My Submitted Assignments
-			</h2>
-			<div className="overflow-x-auto">
-				<table className="table-auto w-full border-collapse border border-blue-200">
-					<thead>
-						<tr className="bg-blue-500 text-white">
-							<th className="border border-blue-200 px-4 py-2 text-left">
-								Title
-							</th>
-							<th className="border border-blue-200 px-4 py-2 text-left">
-								Status
-							</th>
-							<th className="border border-blue-200 px-4 py-2 text-left">
-								Total Marks
-							</th>
-							<th className="border border-blue-200 px-4 py-2 text-left">
-								Obtained Marks
-							</th>
-							<th className="border border-blue-200 px-4 py-2 text-left">
-								Feedback
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{mockAssignments.map((assignment) => (
-							<tr key={assignment.id} className="">
-								<td className="border border-blue-300 px-4 py-2">
-									{assignment.title}
-								</td>
-								<td className="border border-blue-300 px-4 py-2">
-									{assignment.status}
-								</td>
-								<td className="border border-blue-300 px-4 py-2">
-									{assignment.totalMarks}
-								</td>
-								<td className="border border-blue-300 px-4 py-2">
-									{assignment.obtainedMarks !== null
-										? assignment.obtainedMarks
-										: '-'}
-								</td>
-								<td className="border border-blue-300 px-4 py-2">
-									{assignment.feedback || 'No feedback yet'}
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
+		<section className="container mx-auto px-4 mt-12">
+			<h2 className="text-3xl font-bold mb-4">Assignments</h2>
+			<div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-6">
+				{assignments.map((assignment) => (
+					<AssignmentCard
+						key={assignment.id}
+						assignment={assignment}
+						currentUserEmail={user?.email}
+						onDelete={() => deleteAssignmentMutation.mutate(assignment.id)}
+						onUpdate={() => openUpdateModal(assignment)}
+					/>
+				))}
 			</div>
-		</div>
+
+			{/* Update Modal */}
+			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+				<AssignmentForm
+					onSubmit={(updatedData) =>
+						updateAssignmentMutation.mutate(updatedData)
+					}
+					assignment={currentAssignment}
+					mode="update"
+				/>
+			</Modal>
+		</section>
 	);
 };
 
