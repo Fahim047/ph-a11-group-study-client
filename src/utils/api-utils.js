@@ -7,3 +7,26 @@ export const createSubmission = async (submissionData) => {
 	);
 	return response.data;
 };
+export const fetchAllPendingSubmissions = async () => {
+	const response = await axios.get(
+		`${import.meta.env.VITE_API_BASE_URL}/submissions/pending`
+	);
+	return response.data;
+};
+export const updateSubmissionMarks = async ({
+	submissionId,
+	obtainedMarks,
+	feedback,
+}) => {
+	console.log(
+		'Updating submission marks:',
+		submissionId,
+		obtainedMarks,
+		feedback
+	);
+	const response = await axios.put(
+		`${import.meta.env.VITE_API_BASE_URL}/submissions/${submissionId}`,
+		{ obtainedMarks, feedback }
+	);
+	return response.data;
+};
