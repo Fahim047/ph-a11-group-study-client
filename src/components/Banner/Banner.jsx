@@ -14,8 +14,8 @@ const Banner = () => {
 					</h1>
 
 					<p className="mx-auto mt-4 max-w-xl sm:text-xl/relaxed">
-						Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt
-						illo tenetur fuga ducimus numquam ea!
+						Study together with your peers and get a chance to win exciting
+						prizes
 					</p>
 
 					<div className="mt-8 flex flex-wrap justify-center gap-4">

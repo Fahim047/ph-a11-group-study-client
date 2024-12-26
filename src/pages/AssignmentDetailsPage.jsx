@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import TakeAssignmentModal from '../components/Assignments/TakeAssignmentModal';
+import { useAuth } from '../hooks';
 
 const AssignmentDetailsPage = () => {
+	const { user } = useAuth();
 	const location = useLocation();
 	const { state: assignment } = location;
+	console.log(assignment);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const difficultyStyle = {
 		easy: 'bg-green-100 text-green-600',
@@ -64,9 +67,16 @@ const AssignmentDetailsPage = () => {
 				<div className="text-right">
 					<button
 						onClick={handleModalOpen}
-						className="inline-block bg-blue-500 text-white font-medium px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition"
+						disabled={user?.email === assignment?.author?.email}
+						className={`inline-block bg-blue-500 text-white font-medium px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition ${
+							user?.email === assignment?.author?.email
+								? 'opacity-80 cursor-not-allowed'
+								: ''
+						}`}
 					>
-						Take Assignment
+						{user?.email === assignment?.author?.email
+							? "You can't take your own assignment"
+							: 'Take Assignment'}
 					</button>
 				</div>
 
