@@ -1,35 +1,52 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../hooks';
+import { createSubmission } from '../../utils/api-utils';
 
-const TakeAssignmentModal = ({ assignment, onSubmit, onClose }) => {
+const TakeAssignmentModal = ({ assignment, onClose }) => {
+	const { user } = useAuth();
+	const navigate = useNavigate();
+	const queryClient = useQueryClient();
+
+	// Local state for form inputs
 	const [googleDocsLink, setGoogleDocsLink] = useState('');
-	const [quickNote, setQuickNote] = useState('');
-	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [note, setNote] = useState('');
 
-	const handleSubmit = async (e) => {
+	const { mutate: submitAssignment, isLoading: isSubmitting } = useMutation({
+		mutationFn: createSubmission,
+		onSuccess: () => {
+			toast.success('Assignment submitted successfully!');
+			queryClient.invalidateQueries(['assignments']);
+			onClose();
+		},
+		onError: (error) => {
+			toast.error(`Failed to submit the assignment: ${error.message}`);
+		},
+	});
+
+	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		if (!user) {
+			toast.error('You must be logged in to submit an assignment.');
+			navigate('/login');
+			return;
+		}
 
 		if (!googleDocsLink.trim()) {
 			toast.error('Please provide a valid Google Docs link.');
 			return;
 		}
 
-		setIsSubmitting(true);
-		try {
-			await onSubmit({
-				assignmentId: assignment.id,
-				googleDocsLink,
-				quickNote,
-				status: 'pending',
-			});
-			toast.success('Assignment submitted successfully!');
-			setGoogleDocsLink('');
-			setQuickNote('');
-		} catch (error) {
-			toast.error('Failed to submit the assignment. Please try again.');
-		} finally {
-			setIsSubmitting(false);
-		}
+		// Call the mutation
+		submitAssignment({
+			assignmentId: assignment.id,
+			userEmail: user?.email,
+			googleDocsLink,
+			note,
+		});
 	};
 
 	return (
@@ -58,16 +75,16 @@ const TakeAssignmentModal = ({ assignment, onSubmit, onClose }) => {
 					</div>
 					<div>
 						<label
-							htmlFor="quickNote"
+							htmlFor="note"
 							className="block text-sm font-medium text-gray-700"
 						>
 							Quick Note
 						</label>
 						<textarea
-							id="quickNote"
+							id="note"
 							rows={4}
-							value={quickNote}
-							onChange={(e) => setQuickNote(e.target.value)}
+							value={note}
+							onChange={(e) => setNote(e.target.value)}
 							className="bg-transparent mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
 							placeholder="Add a quick note (optional)"
 						/>

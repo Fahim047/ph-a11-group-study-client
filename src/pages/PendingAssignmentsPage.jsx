@@ -1,5 +1,6 @@
-// Importing necessary dependencies
-import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { fetchAllPendingAssignments } from '../utils/queries';
 
 // Mock data for pending assignments
 const mockPendingAssignments = [
@@ -22,6 +23,10 @@ const mockPendingAssignments = [
 ];
 
 const PendingAssignments = () => {
+	const { data: pendingAssignments } = useQuery({
+		queryKey: ['pendingAssignments'],
+		queryFn: fetchAllPendingAssignments,
+	});
 	const [selectedAssignment, setSelectedAssignment] = useState(null);
 
 	const handleGiveMark = (assignment) => {
