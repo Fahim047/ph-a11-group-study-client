@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -45,10 +44,7 @@ const LoginPage = () => {
 		try {
 			const result = await handleSignInWithGoogle();
 			const user = { email: result?.user?.email };
-			const response = await axios.post(
-				`${import.meta.env.VITE_API_BASE_URL}/jwt`,
-				user
-			);
+			const response = await apiClient.post(`/jwt`, user);
 			console.log(response.data);
 			toast.success('Logged in successfully!');
 			navigate(location?.state || '/');

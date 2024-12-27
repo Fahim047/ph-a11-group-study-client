@@ -51,15 +51,15 @@ const TakeAssignmentModal = ({ assignment, onClose }) => {
 
 	return (
 		<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-			<div className="bg-white rounded-lg shadow-lg w-11/12 max-w-lg p-6">
-				<h2 className="text-2xl font-semibold text-gray-800 mb-4">
+			<div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg w-11/12 max-w-lg p-6">
+				<h2 className="text-2xl font-semibold text-gray-900mb-4">
 					Submit Assignment: {assignment.title}
 				</h2>
 				<form onSubmit={handleSubmit} className="space-y-4">
 					<div>
 						<label
 							htmlFor="googleDocsLink"
-							className="block text-sm font-medium text-gray-700"
+							className="block text-sm font-medium"
 						>
 							Google Docs Link
 						</label>

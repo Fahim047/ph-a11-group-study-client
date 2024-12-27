@@ -105,7 +105,7 @@ const Navbar = () => {
 												Create Assignments
 											</Link>
 										</li>
-										<li className="hover:bg-gray-100 dark:hover:bg-gray-700">
+										{/* <li className="hover:bg-gray-100 dark:hover:bg-gray-700">
 											<Link
 												to="/my-assignments"
 												className="block px-4 py-2 text-sm"
@@ -114,7 +114,7 @@ const Navbar = () => {
 												<PlusCircle className="inline-block mr-2 h-5 w-5" />
 												My Assignments
 											</Link>
-										</li>
+										</li> */}
 										<li className="hover:bg-gray-100 dark:hover:bg-gray-700">
 											<Link
 												to="/my-submissions"
@@ -185,12 +185,12 @@ const Navbar = () => {
 							>
 								Create Assignments
 							</NavLink>
-							<NavLink
+							{/* <NavLink
 								to="/my-assignments"
 								className="block text-sm px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
 							>
 								My Assignments
-							</NavLink>
+							</NavLink> */}
 							<NavLink
 								to="/my-submissions"
 								className="block text-sm px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
