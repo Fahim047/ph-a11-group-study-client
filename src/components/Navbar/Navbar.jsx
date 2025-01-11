@@ -27,7 +27,7 @@ const Navbar = () => {
 				`px-4 py-2 text-sm font-medium rounded-md ${
 					isActive
 						? 'text-blue-600 bg-indigo-50'
-						: 'text-gray-600 hover:text-indigo-600 hover:bg-gray-50'
+						: 'hover:text-indigo-600 hover:bg-gray-50'
 				}`
 			}
 		>
