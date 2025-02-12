@@ -5,10 +5,11 @@ import 'swiper/css/pagination';
 
 const Banner = () => {
 	return (
-		<section className="mx-auto max-w-screen-xl px-4 py-16 lg:flex lg:items-center">
-			<div className="mx-auto max-w-3xl text-center">
+		<section className="mt-12 mx-auto max-w-3xl px-4 py-16">
+			<div className="text-center">
 				<h1 className="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl">
 					Study Together.
+					<br />
 					<span className="sm:block"> Grow Together.</span>
 				</h1>
 
@@ -19,8 +20,7 @@ const Banner = () => {
 				<div className="mt-8 flex flex-wrap justify-center gap-4">
 					<Link
 						to="/login"
-						className="block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto"
-						href="#"
+						className="block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-primary focus:outline-none focus:ring active:text-opacity-75 sm:w-auto"
 					>
 						Get Started
 					</Link>

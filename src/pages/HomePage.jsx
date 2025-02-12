@@ -6,13 +6,13 @@ import FeaturesSection from '../components/Sections/FeaturesSection';
 
 const HomePage = () => {
 	return (
-		<div>
+		<>
 			<Banner />
 			<FeaturesSection />
 			<AboutUs />
 			<FaqSection />
 			<ContactUs />
-		</div>
+		</>
 	);
 };
 
