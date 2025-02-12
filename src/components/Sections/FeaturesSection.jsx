@@ -40,13 +40,13 @@ const FeaturesSection = () => {
 
 	return (
 		<section>
-			<div className="container mx-auto px-4 py-16">
+			<div className="max-w-7xl mx-auto px-4 py-12">
 				<h2 className="text-3xl font-bold text-center mb-12">Why StudyMate?</h2>
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 					{features.map((feature, index) => (
 						<div
 							key={index}
-							className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center border-blue-600 border"
+							className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 text-center border border-secondary"
 						>
 							<div className="text-5xl mb-4">{feature.icon}</div>
 							<h3 className="text-xl font-bold mb-2">{feature.title}</h3>

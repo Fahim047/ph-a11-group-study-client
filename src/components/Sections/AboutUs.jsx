@@ -2,11 +2,11 @@ import { Lightbulb, PenTool, Users } from 'lucide-react';
 
 const AboutUs = () => {
 	return (
-		<section className="py-16">
-			<div className="container mx-auto px-6">
+		<section className="py-12">
+			<div className="max-w-7xl mx-auto px-4">
 				<h2 className="text-3xl font-bold text-center mb-12">About Us</h2>
 				<div className="grid md:grid-cols-3 gap-12">
-					<div className="flex flex-col items-center text-center">
+					<div className="flex flex-col items-center text-center border border-secondary py-8 px-5 rounded-md">
 						<Users className="text-5xl text-blue-500 mb-4" />
 						<h3 className="text-xl font-semibold mb-2">Our Mission</h3>
 						<p className="text-gray-600 dark:text-white/70">
@@ -16,7 +16,7 @@ const AboutUs = () => {
 						</p>
 					</div>
 
-					<div className="flex flex-col items-center text-center">
+					<div className="flex flex-col items-center text-center border border-secondary py-8 px-5 rounded-md">
 						<PenTool className="text-5xl text-green-500 mb-4" />
 						<h3 className="text-xl font-semibold mb-2">Our Vision</h3>
 						<p className="text-gray-600 dark:text-white/70">
@@ -26,7 +26,7 @@ const AboutUs = () => {
 						</p>
 					</div>
 
-					<div className="flex flex-col items-center text-center">
+					<div className="flex flex-col items-center text-center border border-secondary py-8 px-5 rounded-md">
 						<Lightbulb className="text-5xl text-yellow-500 mb-4" />
 						<h3 className="text-xl font-semibold mb-2">Why Choose Us?</h3>
 						<p className="text-gray-600 dark:text-white/70">
