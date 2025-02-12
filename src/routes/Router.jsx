@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import AssignmentDetailsPage from '../pages/AssignmentDetailsPage';
 import AssignmentsPage from '../pages/AssignmentsPage';
+import ContactPage from '../pages/ContactPage';
 import CreateAssignmentPage from '../pages/CreateAssignmentPage';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
 			{
 				path: '/assignments/pending',
 				element: <PendingAssignments />,
+			},
+			{
+				path: '/contact',
+				element: <ContactPage />,
 			},
 			{
 				path: '*',

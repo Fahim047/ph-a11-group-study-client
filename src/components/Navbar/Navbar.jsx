@@ -59,6 +59,7 @@ const Navbar = () => {
 							</NavItem>
 						</>
 					)}
+					<NavItem to="/contact">Contact</NavItem>
 				</div>
 
 				{/* Right Section */}
@@ -199,6 +200,12 @@ const Navbar = () => {
 							</NavLink>
 						</>
 					)}
+					<NavLink
+						to="/contact"
+						className="block text-sm px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+					>
+						Contact
+					</NavLink>
 				</div>
 			)}
 		</nav>
