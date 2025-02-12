@@ -1,5 +1,3 @@
-// AboutUs.jsx
-
 import { Lightbulb, PenTool, Users } from 'lucide-react';
 
 const AboutUs = () => {

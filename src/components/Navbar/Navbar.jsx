@@ -59,6 +59,7 @@ const Navbar = () => {
 							</NavItem>
 						</>
 					)}
+					<NavItem to="/about">About</NavItem>
 					<NavItem to="/contact">Contact</NavItem>
 				</div>
 
@@ -201,10 +202,16 @@ const Navbar = () => {
 						</>
 					)}
 					<NavLink
+						to="/about"
+						className="block text-sm px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+					>
+						About Us
+					</NavLink>
+					<NavLink
 						to="/contact"
 						className="block text-sm px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
 					>
-						Contact
+						Contact Us
 					</NavLink>
 				</div>
 			)}
