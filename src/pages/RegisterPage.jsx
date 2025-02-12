@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Illustration from '../assets/undraw_sign-up.svg';
 import { useAuth } from '../hooks';
 import { validatePassword } from '../utils/validatePassword';
-
 const RegisterPage = () => {
 	const { createUser, handleLogout, handleUpdateProfile } = useAuth();
 	const [name, setName] = useState('');
@@ -42,13 +42,18 @@ const RegisterPage = () => {
 	};
 
 	return (
-		<div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-			<div className="bg-blue-100 max-w-md p-6 w-full space-y-8 shadow-md rounded-xl">
-				<div>
-					<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-						Create your account
-					</h2>
-				</div>
+		<div className="flex flex-col md:flex-row items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+			<div className="hidden md:block w-1/3 mr-8">
+				<img
+					src={Illustration}
+					alt="Register Illustration"
+					className="w-full h-auto rounded-xl"
+				/>
+			</div>
+			<div className="dark:bg-blue-100 max-w-md p-6 w-full space-y-6 shadow-md rounded-xl">
+				<h2 className="text-center text-3xl font-extrabold text-gray-900">
+					Create your account
+				</h2>
 				<form className="mt-8 space-y-6" onSubmit={handleSubmit}>
 					<div className="rounded-md shadow-sm space-y-4">
 						<div>
@@ -144,10 +149,7 @@ const RegisterPage = () => {
 
 				<div className="text-gray-600 text-sm text-center">
 					Already have an account?{' '}
-					<Link
-						to="/login"
-						className="font-medium text-blue-600 hover:text-blue-500"
-					>
+					<Link to="/login" className="text-blue-600 hover:text-blue-500">
 						Log in
 					</Link>
 				</div>
