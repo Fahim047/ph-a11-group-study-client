@@ -24,10 +24,8 @@ const Navbar = () => {
 			to={to}
 			end={exact}
 			className={({ isActive }) =>
-				`px-4 py-2 text-sm font-medium rounded-md ${
-					isActive
-						? 'text-blue-600 bg-indigo-50'
-						: 'hover:text-indigo-600 hover:bg-gray-50'
+				`font-medium rounded-md ${
+					isActive ? 'text-primary' : 'hover:text-primary-dark'
 				}`
 			}
 		>
@@ -41,14 +39,17 @@ const Navbar = () => {
 				darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
 			}`}
 		>
-			<div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+			<div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center gap-2">
 				{/* Logo */}
 				<Link to="/" className="text-2xl font-bold text-blue-600">
 					StudyMate
 				</Link>
 
 				{/* Desktop Navigation */}
-				<div className="hidden md:flex md:items-center md:space-x-6">
+				<div className="hidden md:flex md:flex-grow md:items-center md:justify-center md:gap-6">
+					<NavItem to="/" exact={true}>
+						Home
+					</NavItem>
 					<NavItem to="/assignments" exact={true}>
 						Assignments
 					</NavItem>
@@ -167,6 +168,12 @@ const Navbar = () => {
 			{/* Mobile Navigation */}
 			{isMenuOpen && (
 				<div className="md:hidden bg-gray-100 dark:bg-gray-800 px-4 pt-2 pb-3 space-y-1">
+					<NavItem
+						to="/"
+						className="block text-sm px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+					>
+						Home
+					</NavItem>
 					<NavLink
 						to="/assignments"
 						className="block text-sm px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
