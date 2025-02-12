@@ -66,9 +66,9 @@ const AssignmentsPage = () => {
 	}
 
 	return (
-		<section className="container mx-auto px-4 mt-12">
-			<h2 className="text-3xl font-bold mb-4">Assignments</h2>
-			<div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-6">
+		<section className="max-w-7xl mx-auto px-4 py-12">
+			<h2 className="text-3xl font-bold mb-12">Assignments</h2>
+			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 				{assignments?.map((assignment) => (
 					<AssignmentCard
 						key={assignment.id}

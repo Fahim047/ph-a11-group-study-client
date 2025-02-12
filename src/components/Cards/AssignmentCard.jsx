@@ -1,3 +1,5 @@
+import { MoreVertical } from 'lucide-react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
@@ -9,6 +11,8 @@ const AssignmentCard = ({
 	onUpdate,
 }) => {
 	const navigate = useNavigate();
+	const [menuOpen, setMenuOpen] = useState(false);
+
 	const difficultyStyle = {
 		easy: 'bg-green-100 text-green-600',
 		medium: 'bg-yellow-100 text-yellow-600',
@@ -39,7 +43,6 @@ const AssignmentCard = ({
 			toast.error('You can only update assignments you created.');
 			return;
 		}
-
 		onUpdate(assignment);
 	};
 
@@ -48,51 +51,54 @@ const AssignmentCard = ({
 	};
 
 	return (
-		<div className="shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-blue-400 rounded-md">
-			<div className="relative">
+		<div className="p-4 shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-secondary-dark rounded-md relative">
+			<div className="relative mb-4">
 				<img
-					className="h-48 w-full object-cover"
+					className="h-48 w-full object-cover rounded-md"
 					src={assignment.imageURL || 'https://via.placeholder.com/300'}
 					alt={assignment.title}
 				/>
 				<span
-					className={`absolute top-3 right-3 px-3 py-1 text-xs font-semibold rounded-full capitalize ${
+					className={`absolute top-3 left-3 px-3 py-1 text-xs font-semibold rounded-full capitalize ${
 						assignment?.difficulty && difficultyStyle[assignment.difficulty]
 					}`}
 				>
 					{assignment.difficulty}
 				</span>
+				<button
+					onClick={() => setMenuOpen(!menuOpen)}
+					className="absolute top-3 right-3 p-2 text-white rounded-full shadow-md"
+				>
+					<MoreVertical size={18} />
+				</button>
+				{menuOpen && (
+					<div className="absolute top-10 right-3 bg-white dark:bg-gray-800 shadow-lg rounded-md w-32 text-sm">
+						<button
+							onClick={handleUpdate}
+							className="block w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md"
+						>
+							Update
+						</button>
+						<button
+							onClick={handleDelete}
+							className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 rounded-md"
+						>
+							Delete
+						</button>
+					</div>
+				)}
 			</div>
-			<div className="p-4">
-				<h3 className="text-lg font-semibold text-blue-200">
-					{assignment.title}
-				</h3>
-				<p className="text-sm mt-1">
-					Marks: <span className="font-medium">{assignment.description}</span>
-				</p>
-				<p className="text-sm mt-1">
-					Marks: <span className="font-medium">{assignment.marks}</span>
-				</p>
-				<div className="mt-4 flex items-center justify-end space-x-2">
-					<button
-						onClick={handleView}
-						className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition duration-200"
-					>
-						View
-					</button>
-					<button
-						onClick={handleUpdate}
-						className=" bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition duration-200"
-					>
-						Update
-					</button>
-					<button
-						onClick={handleDelete}
-						className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition duration-200"
-					>
-						Delete
-					</button>
-				</div>
+			<h3 className="text-lg font-semibold mb-2">{assignment.title}</h3>
+			<p className="text-sm mt-1 text-secondary">
+				Marks: <span className="font-medium">{assignment.marks}</span>
+			</p>
+			<div className="flex justify-end">
+				<button
+					onClick={handleView}
+					className="block w-fit text-left px-4 py-2 bg-primary-light hover:bg-opacity-80 rounded-md"
+				>
+					Details
+				</button>
 			</div>
 		</div>
 	);

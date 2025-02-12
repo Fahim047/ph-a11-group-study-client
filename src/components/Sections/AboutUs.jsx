@@ -5,7 +5,7 @@ const AboutUs = () => {
 		<section className="py-12">
 			<div className="max-w-7xl mx-auto px-4">
 				<h2 className="text-3xl font-bold text-center mb-12">About Us</h2>
-				<div className="grid md:grid-cols-3 gap-12">
+				<div className="grid md:grid-cols-3 gap-6">
 					<div className="flex flex-col items-center text-center border border-secondary py-8 px-5 rounded-md">
 						<Users className="text-5xl text-blue-500 mb-4" />
 						<h3 className="text-xl font-semibold mb-2">Our Mission</h3>
